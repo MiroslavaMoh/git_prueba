@@ -29,22 +29,29 @@ class Personaje:
 
     def esta_vivo(self):
         return self.vida > 0
+
     def morir(self):
         self.vida = 0 
         print(self.nombre, "ha muerto")
+        
 
     def dañar(self,enemigo):
-        return self.fuerza - enemigo.defensa
+            return self.fuerza - enemigo.defensa    
 
     def atacar(self, enemigo):
         daño = self.dañar(enemigo)
+        if 0 >= daño:
+            daño = 0
         enemigo.vida = enemigo.vida - daño
         print(self.nombre," ha realizado un ataque RAAAAAA. Ya muerete ", enemigo.nombre)
         print(self.nombre," ha realizado ", daño, " puntos de daño a ", enemigo.nombre)
         print("Vida restante de ", enemigo.nombre, " es de ", enemigo.vida)
+        #RETO
+        if (self.fuerza - enemigo.defensa)<=0:
+            enemigo.morir()
 
 #variable del constructor vacío en este momento
-mi_personaje = Personaje("Isaac",100,3,70,100)
+mi_personaje = Personaje("Isaac",40,3,70,100)
 mi_personaje.imprimir_atributos()
 # mi_personaje.subir_nivel(10,1,5)
 # print("_________________")
