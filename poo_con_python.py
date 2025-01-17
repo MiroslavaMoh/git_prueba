@@ -50,12 +50,20 @@ class Personaje:
              print("Vida de", enemigo.nombre, "es", enemigo.vida)
         else:
             enemigo.morir()
+
+class Guerrero (Personaje):
+    pass
+
+
 #Variable del constructor de la clase
-mi_personaje = Personaje("Dante",1000, 3,70,100)
-mi_personaje.imprimir_atributos()
-mi_enemigo = Personaje("Vergil",70,30,70,100)
-mi_personaje.atacar(mi_enemigo)
-mi_enemigo.imprimir_atributos()
+
+tlatoani = Guerrero("Apocalipto",50,70,30,100)
+
+# mi_personaje = Personaje("Dante",1000, 3,70,100)
+# mi_personaje.imprimir_atributos()
+# mi_enemigo = Personaje("Vergil",70,30,70,100)
+# mi_personaje.atacar(mi_enemigo)
+# mi_enemigo.imprimir_atributos()
 
 
 #print(mi_personaje.dañar(mi_enemigo))
