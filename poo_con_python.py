@@ -52,12 +52,68 @@ class Personaje:
             enemigo.morir()
 
 class Guerrero (Personaje):
-    pass
+    #sobreescribir constructor
+    def __init__ (self, nombre, fuerza, inteligencia, defensa, vida, espada):
+        super().__init__(nombre, fuerza, inteligencia, defensa, vida)
+        self.espada = espada
+    #pass
+    def imprimir_atributos(self):
+        super().imprimir_atributos()
+        print("-Espada: ", self.espada)
 
+    def elegir_arma(self):
+        opcion = int(input("Elige un arma: \n(1) Lanza de obsidiana, daño 10\n(2) Lanza de chaya, daño 5\n>>>>>>> "))
+        if opcion == 1:
+            self.espada = 10
+        elif opcion == 2:
+            self.espada = 5
+        else:
+            print("Opción no válida")
+            self.elegir_arma()
+
+
+    def daño(self,enemigo):
+        return self.fuerza*self.espada - enemigo.defensa
+    
+class Mago (Personaje):
+    #sobreescribir constructor
+    def __init__ (self, nombre, fuerza, inteligencia, defensa, vida, libro):
+        super().__init__(nombre, fuerza, inteligencia, defensa, vida)
+        self.libro = libro
+    #pass
+    def imprimir_atributos(self):
+        super().imprimir_atributos()
+        print("-libro: ", self.libro)
+
+    def elegir_arma(self):
+        opcion = int(input("elige in arma: \n (1)Hechizos de programación, daño 10 \n(2) Recetario de chaya , daño 2 \n>>>>>>>"))
+        if opcion == 1:
+            self.libro = 10
+        elif opcion == 2:
+            self.libro = 2
+        else:
+            print("Opcion no valida")
+            self.elegir_arma()
+    def daño(self,enemigo):
+        return self.inteligencia * self.libro - enemigo.defensa
 
 #Variable del constructor de la clase
+michael_jackon = Personaje("Michael Jackson",20,15,10,100)
+tlatoani = Guerrero("Apocalipto",50,70,30,100,5)
+merlin=Mago("Merlin",20,15,10,100,6)
+tlatoani.imprimir_atributos()
+tlatoani.elegir_arma()
+#tlatoani.imprimir_atributos()
+merlin.imprimir_atributos()
+merlin.elegir_arma()
+#merlin.imprimir_atributos
+michael_jackon.imprimir_atributos()
 
-tlatoani = Guerrero("Apocalipto",50,70,30,100)
+#ataques masivos
+michael_jackon.atacar(tlatoani)
+tlatoani.atacar(merlin)
+merlin.atacar(michael_jackon)
+
 
 # mi_personaje = Personaje("Dante",1000, 3,70,100)
 # mi_personaje.imprimir_atributos()
