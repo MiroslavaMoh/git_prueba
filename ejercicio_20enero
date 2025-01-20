@@ -1,0 +1,31 @@
+class Personaje:    
+    def __init__(self, nombre, fuerza, inteligencia, defensa, vida): 
+        self.nombre = nombre 
+        self.fuerza = fuerza 
+        self.inteligencia = inteligencia 
+        self.defensa = defensa 
+        self.vida = vida 
+
+    #01
+    def imprimir_atributos(self): 
+      print("-Nombre:",self.nombre) 
+      print("-Fuerza:",self.fuerza) 
+      print("-Inteligencia:",self.inteligencia) 
+      print("-Defensa:",self.defensa) 
+      print("-Vida:",self.vida) 
+
+    #03
+    def morir(self): 
+     self.vida = 0 
+     print(self.nombre,"ha muerto") 
+
+
+# 02
+personaje = Personaje("Edier", 30, 50, 20, 10) 
+personaje.imprimir_atributos() 
+
+print("\n")
+#03
+personaje = Personaje("Miros", 20, 10, 15, 0) 
+personaje.imprimir_atributos() 
+personaje.morir() 

@@ -1,11 +1,4 @@
 class Personaje:
-    #Atributos de la clase 
-    #nombre = 'Default'
-    #fuerza = 0
-    #inteligencia = 0
-    #defensa = 0
-    #vida = 0
-
     #Constructor de la clase
     def __init__(self, nombre, fuerza, inteligencia, defensa, vida):
         self.nombre = nombre
@@ -40,26 +33,44 @@ class Personaje:
         #return self.vida <= 0
         
     def dañar(self, enemigo):
-        return self.fuerza - enemigo.defensa
+        daño = max(self.fuerza - enemigo.defensa, 0)  # El daño no puede ser negativo
+        return daño
     
+    def dañar(self, enemigo):
+        daño = max(self.fuerza - enemigo.defensa, 0)  # El daño no puede ser negativo
+        return daño
+
     def atacar(self, enemigo):
-        daño=self.dañar(enemigo)
-        enemigo.vida = enemigo.vida - daño
-        print(self.nombre, "Ha realizado", daño, "puntos de daño a", enemigo.nombre)
-        if enemigo.esta_vivo():
-             print("Vida de", enemigo.nombre, "es", enemigo.vida)
-        else:
-            enemigo.morir()
+        daño = self.dañar(enemigo)
+        enemigo.recibir_ataque(daño)
+
+    def recibir_ataque(self, daño):
+        self.vida -= daño
+        print(self.nombre," recibió ",daño," de daño. Vida restante:", self.vida)
+        if not self.esta_vivo():
+            self.morir()
+
+    
+    # def recibir_ataque(self, enemigo):
+    #     daño=self.dañar(enemigo)
+    #     enemigo.vida = enemigo.vida - daño
+    #     print(self.nombre, "Ha realizado", daño, "puntos de daño a", enemigo.nombre)
+    #     if enemigo.esta_vivo():
+    #          print("Vida de", enemigo.nombre, "es", enemigo.vida)
+    #     else:
+    #         enemigo.morir()
 
 class Guerrero (Personaje):
     #sobreescribir constructor
-    def __init__ (self, nombre, fuerza, inteligencia, defensa, vida, espada):
+    def __init__ (self, nombre, fuerza, inteligencia, defensa, vida, espada, escudo):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.espada = espada
+        self.escudo = escudo
     #pass
     def imprimir_atributos(self):
         super().imprimir_atributos()
         print("-Espada: ", self.espada)
+        print("-Escudo: ", self.escudo)
 
     def elegir_arma(self):
         opcion = int(input("Elige un arma: \n(1) Lanza de obsidiana, daño 10\n(2) Lanza de chaya, daño 5\n>>>>>>> "))
@@ -74,12 +85,32 @@ class Guerrero (Personaje):
 
     def daño(self,enemigo):
         return self.fuerza*self.espada - enemigo.defensa
+
+
+    def recibir_ataque(self, daño):
+        #Vida_escudo
+        self.escudo= self.defensa * self.escudo
+
+        if daño < self.escudo:
+            self.escudo -= daño
+            print("El escudo de",self.nombre," absorbió",daño,"de daño. Escudo restante:", self.escudo)
+        elif daño == self.escudo:
+            self.escudo = 0
+            print("El escudo de",self.nombre," fue destruido, pero absorbió todo el daño.")
+        else:
+            daño_restante = daño - self.escudo
+            self.escudo = 0
+            self.vida -= daño_restante
+            print("El escudo de",self.nombre," fue destruido. Daño restante aplicado:" ,daño_restante,". Vida restante:",self.vida)
+            if not self.esta_vivo():
+                self.morir()
     
 class Mago (Personaje):
     #sobreescribir constructor
     def __init__ (self, nombre, fuerza, inteligencia, defensa, vida, libro):
         super().__init__(nombre, fuerza, inteligencia, defensa, vida)
         self.libro = libro
+
     #pass
     def imprimir_atributos(self):
         super().imprimir_atributos()
@@ -98,11 +129,12 @@ class Mago (Personaje):
         return self.inteligencia * self.libro - enemigo.defensa
 
 #Variable del constructor de la clase
-michael_jackon = Personaje("Michael Jackson",20,15,10,100)
-tlatoani = Guerrero("Apocalipto",50,70,30,100,5)
+michael_jackon = Personaje("Michael Jackson",2000,15,10,100)
+tlatoani = Guerrero("Apocalipto",50,70,30,100,5,10)
 merlin=Mago("Merlin",20,15,10,100,6)
-tlatoani.imprimir_atributos()
+
 tlatoani.elegir_arma()
+tlatoani.imprimir_atributos()
 #tlatoani.imprimir_atributos()
 merlin.imprimir_atributos()
 merlin.elegir_arma()
@@ -110,8 +142,11 @@ merlin.elegir_arma()
 michael_jackon.imprimir_atributos()
 
 #ataques masivos
+print("\n")
 michael_jackon.atacar(tlatoani)
+print("\n")
 tlatoani.atacar(merlin)
+print("\n")
 merlin.atacar(michael_jackon)
 
 
